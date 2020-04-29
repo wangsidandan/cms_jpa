@@ -1,5 +1,6 @@
-package com.briup.cms_jpa.bean;
+package com.briup.cms_jpa.bean.ex;
 
+import com.briup.cms_jpa.bean.Article;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,15 +13,25 @@ import java.util.List;
 @Table(name = "cms_category")
 @ApiModel
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
-public class Category implements Serializable {
+public class CategoryVM implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "栏目id")
     private Integer id;
-    @ApiModelProperty(value = "栏目编码",required = false)
+    @ApiModelProperty(value = "栏目编码",required = true)
     private long code;
-    @ApiModelProperty(value = "栏目名称",required = false)
+    @ApiModelProperty(value = "栏目名称",required = true)
     private String name;
+    @OneToMany(mappedBy = "category",targetEntity =Article.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Article>articles;
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
     public Integer getId() {
         return id;

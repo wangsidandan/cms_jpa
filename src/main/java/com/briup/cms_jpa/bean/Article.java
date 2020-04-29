@@ -1,5 +1,6 @@
 package com.briup.cms_jpa.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,11 +11,12 @@ import java.util.Date;
 @Entity
 @Table(name = "cms_article")
 @ApiModel
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
 public class Article implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "信息id")
-    private int id;
+    private Integer id;
 
     @ApiModelProperty(value = "信息作者",required = true)
     private String author;
@@ -31,7 +33,7 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "信息标题",required = true)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -43,11 +45,11 @@ public class Article implements Serializable {
         this.category = category;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
