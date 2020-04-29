@@ -1,6 +1,7 @@
 package com.briup.cms_jpa.web.controller;
 
 import com.briup.cms_jpa.bean.Category;
+import com.briup.cms_jpa.bean.ex.CategoryVM;
 import com.briup.cms_jpa.service.ICategoryService;
 import com.briup.cms_jpa.util.Message;
 import com.briup.cms_jpa.util.MessageUtil;
@@ -21,13 +22,13 @@ public class CategoryController {
     private ICategoryService service;
     @GetMapping("category/findAll")
     @ApiOperation("查询所有目录")
-    public Message<List<Category>> findAll(){
+    public Message<List<CategoryVM>> findAll(){
         return MessageUtil.success(service.findAll(),"查找成功");
     }
     @ApiOperation("根据id查找目录")
     @GetMapping("category/findById")
     @ApiImplicitParam(name = "id",value = "客户id",paramType = "query",dataType = "int",required = true)
-    public Message<Category>findById(Integer id){
+    public Message<CategoryVM>findById(Integer id){
         return MessageUtil.success(service.findById(id),"查询成功");
     }
     @ApiOperation("添加或更新目录")

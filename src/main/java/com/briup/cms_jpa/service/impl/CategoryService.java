@@ -1,7 +1,9 @@
 package com.briup.cms_jpa.service.impl;
 
 import com.briup.cms_jpa.bean.Category;
+import com.briup.cms_jpa.bean.ex.CategoryVM;
 import com.briup.cms_jpa.dao.CategoryDao;
+import com.briup.cms_jpa.dao.ex.CategoryExDao;
 import com.briup.cms_jpa.exception.CustomerException;
 import com.briup.cms_jpa.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +15,24 @@ import java.util.List;
 public class CategoryService implements ICategoryService {
     @Autowired
     private CategoryDao cateGoryDao;
+    @Autowired
+    private CategoryExDao categoryExDao;
     @Override
-    public List<Category> findAll() {
-        return cateGoryDao.findAll();
+    public List<CategoryVM> findAll() {
+        return categoryExDao.findAll();
     }
 
     @Override
-    public Category findById(Integer id) {
-        return cateGoryDao.getOne(id);
+    public CategoryVM findById(Integer id) {
+        return categoryExDao.getOne(id);
     }
 
     @Override
     public void saveOrUpdate(Category category) {
+        CategoryVM categoryVM = categoryExDao.findByName(category.getName());
+        if (categoryVM!=null){
+            throw new CustomerException("栏目名称已经存在");
+        }
         try{
             cateGoryDao.save(category);
         }catch (Exception e){
@@ -36,11 +44,10 @@ public class CategoryService implements ICategoryService {
     @Override
     public void deleteById(Integer id) {
         try{
-            cateGoryDao.deleteById(id);
+            categoryExDao.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
             throw new CustomerException("该目录不存在，无法删除");
         }
-
     }
 }

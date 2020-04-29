@@ -17,22 +17,16 @@ public class Article implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "信息id")
     private Integer id;
-
     @ApiModelProperty(value = "信息作者",required = true)
     private String author;
-
     @ApiModelProperty(value = "点击次数",hidden = true)
     private int clickTimes;
-
     @ApiModelProperty(value = "信息内容",required = true)
     private String content;
-
     @ApiModelProperty(value = "发布时间",hidden = true)
     private Date publishDate;
-
     @ApiModelProperty(value = "信息标题",required = true)
     private String title;
-
     @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;

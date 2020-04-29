@@ -21,6 +21,16 @@ public class Category implements Serializable {
     private long code;
     @ApiModelProperty(value = "栏目名称",required = false)
     private String name;
+//    @OneToMany(mappedBy = "category",targetEntity =Article.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    private List<Article>articles;
+//
+//    public List<Article> getArticles() {
+//        return articles;
+//    }
+//
+//    public void setArticles(List<Article> articles) {
+//        this.articles = articles;
+//    }
 
     public Integer getId() {
         return id;

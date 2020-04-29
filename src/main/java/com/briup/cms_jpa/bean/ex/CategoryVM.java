@@ -24,11 +24,9 @@ public class CategoryVM implements Serializable {
     private String name;
     @OneToMany(mappedBy = "category",targetEntity =Article.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Article>articles;
-
     public List<Article> getArticles() {
         return articles;
     }
-
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }

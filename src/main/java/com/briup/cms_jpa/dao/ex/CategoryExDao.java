@@ -5,4 +5,5 @@ import com.briup.cms_jpa.bean.ex.CategoryVM;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryExDao extends JpaRepository<CategoryVM,Integer> {
+    CategoryVM findByName(String name);
 }
