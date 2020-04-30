@@ -18,14 +18,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+//该配置类不生效，需要在SecurityCofig中配置
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     @Qualifier("customerService")
     private UserDetailsService userDetailService;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException, ServletException {
         String token = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
@@ -35,7 +34,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
         try {
             String username = JwtTokenUtils.getUsername(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

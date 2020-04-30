@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
     此处需要对应的逻辑
     空实现，由SpringSecurity去处理
  */
-
 @RestController
 public class FormController {
     @ApiOperation("登陆逻辑")
     @PostMapping("/authentication/form")
     public void form(String username,String password){
-
     }
 }

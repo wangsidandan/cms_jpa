@@ -2,6 +2,7 @@ package com.briup.cms_jpa.web.controller;
 
 import com.briup.cms_jpa.bean.Article;
 import com.briup.cms_jpa.service.IArticleService;
+import com.briup.cms_jpa.util.ExcelUtils;
 import com.briup.cms_jpa.util.Message;
 import com.briup.cms_jpa.util.MessageUtil;
 import io.swagger.annotations.Api;
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Api(description = "文章相关接口")
@@ -49,5 +54,27 @@ public class ArticleController {
     public Message deleteById(Integer id){
         service.deleteById(id);
         return MessageUtil.success("删除成功");
+    }
+    //将数据库信息导入到表格，自定义需要导出的内容
+            @ApiOperation(value="将文章导入到Excel中",notes="注意！测试的时候请将地址粘贴到浏览器地址栏测试",produces="application/octet-stream")
+            @GetMapping("/article/download")
+            public void download(HttpServletResponse response) throws Exception{
+                // 查询出所有文章信息
+                String excelName = "article_list";
+                String[] headList = new String[]{"编号","标题","内容","目录","作者"};
+                String[] fieldList = new String[]{"id","title","content","category","author"};
+                List<Map<String, Object>> dataList = new ArrayList<>();
+                List<Article> list =service.findAll();
+                for(Article a : list){
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id",a.getId());
+                    map.put("title",a.getTitle());
+                    map.put("content",a.getContent());
+                    map.put("category",a.getCategory().getName());
+                    map.put("author",a.getAuthor());
+                    dataList.add(map);
+                }
+        //调用工具类导出excel
+        ExcelUtils.createExcel(response,excelName,headList,fieldList,dataList);
     }
 }

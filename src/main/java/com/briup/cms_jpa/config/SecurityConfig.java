@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authenticaion/login").permitAll()
                 .antMatchers("/authentication/form").permitAll()
                 .antMatchers("/index/**").permitAll()
+                .antMatchers("/article/download").permitAll()
                 // 设置允许访问的资源
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers(
@@ -67,13 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/configuration/security",
                         "/swagger-ui.html/**",
                         "/webjars/**"
-
                 ).permitAll()
                 .anyRequest().authenticated();
-
         // 禁用缓存
         http.headers().cacheControl();
-
         // 添加JWT filter
         http.addFilterBefore(getauthenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }

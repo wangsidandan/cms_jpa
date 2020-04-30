@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+//该配置类不生效，需要在SecurityCofig中配置
 public class LoginFailHandler implements AuthenticationFailureHandler {
     @Autowired
     private ObjectMapper objectMapper;
