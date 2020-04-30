@@ -33,11 +33,11 @@ public class MessageUtil {
     public static <E>Message<E> error(String msg){
         return new Message<>(CodeUtil.BAD_CODE, msg, null, new Date().getTime());
     }
-//    public static <E>Message<E> unAuthorized(String msg){
-//        return new Message<>(CodeUtil.UNAUTHOROZED_CODE, msg, null, new Date().getTime());
-//    }
-//    public static <E>Message<E> forbidden(String msg){
-//        return new Message<>(CodeUtil.FORBIDDEN_CODE, msg, null, new Date().getTime());
-//    }
+    public static <E>Message<E> unAuthorized(String msg){
+        return new Message<>(CodeUtil.UNAUTHOROZED_CODE, msg, null, new Date().getTime());
+    }
+    public static <E>Message<E> forbidden(String msg){
+        return new Message<>(CodeUtil.FORBIDDEN_CODE, msg, null, new Date().getTime());
+    }
 
 }
