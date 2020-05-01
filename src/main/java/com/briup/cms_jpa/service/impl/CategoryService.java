@@ -6,6 +6,8 @@ import com.briup.cms_jpa.dao.CategoryDao;
 import com.briup.cms_jpa.dao.ex.CategoryExDao;
 import com.briup.cms_jpa.exception.CustomerException;
 import com.briup.cms_jpa.service.ICategoryService;
+import com.briup.cms_jpa.util.UpdateSelectUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +31,19 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void saveOrUpdate(Category category) {
-        CategoryVM categoryVM = categoryExDao.findByName(category.getName());
-        if (categoryVM!=null){
-            throw new CustomerException("栏目名称已经存在");
-        }
+        Category target=null;
         try{
-            cateGoryDao.save(category);
+            if(category.getId()!=null){
+                 target = cateGoryDao.getOne(category.getId());
+            }else{
+                CategoryVM  categoryVM = categoryExDao.findByName(category.getName());
+                if (categoryVM!=null){
+                    throw new CustomerException("栏目已经存在");
+                }
+                target=category;
+            }
+            BeanUtils.copyProperties(category,target,UpdateSelectUtil.getNullPropertyNames(category));
+            cateGoryDao.save(target);
         }catch (Exception e){
             e.printStackTrace();
             throw new CustomerException("参数不能为空");

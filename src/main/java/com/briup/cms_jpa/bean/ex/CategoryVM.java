@@ -19,7 +19,7 @@ public class CategoryVM implements Serializable {
     @ApiModelProperty(value = "栏目id")
     private Integer id;
     @ApiModelProperty(value = "栏目编码",required = true)
-    private long code;
+    private Long code;
     @ApiModelProperty(value = "栏目名称",required = true)
     private String name;
     @OneToMany(mappedBy = "category",targetEntity =Article.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -39,11 +39,11 @@ public class CategoryVM implements Serializable {
         this.id = id;
     }
 
-    public long getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
